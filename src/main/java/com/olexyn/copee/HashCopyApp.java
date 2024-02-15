@@ -2,20 +2,16 @@ package com.olexyn.copee;
 
 import com.olexyn.copee.model.CFilePair;
 import com.olexyn.copee.model.PathPair;
-import com.olexyn.generic.Pair;
 import com.olexyn.min.lock.LockU;
 import com.olexyn.min.log.LogU;
+import com.olexyn.propconf.PropConf;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
-import static com.olexyn.min.prop.PropStore.getPath;
-import static com.olexyn.min.prop.PropStore.set;
 
 
 /**
@@ -27,25 +23,15 @@ import static com.olexyn.min.prop.PropStore.set;
  */
 public class HashCopyApp {
 
-    private static final String SRC_KEY = "copee.src";
-    private static final String DST_KEY = "copee.dst";
-    private static final int TRY_COUNT = 2;
-
-
-    private static final List<Pair<String>> COPY = List.of(
-        new Pair<>(
-            "/home/user/home/drive/key/copyToSq2021/",
-            "/home/user/home/shade/docs/swissquote/2021/"
-        )
-    );
+    static { PropConf.loadProperties("conf.properties"); }
+    private static final Path SRC = PropConf.getPath("HashCopyApp.SRC");
+    private static final Path DST = PropConf.getPath("HashCopyApp.DST");
+    private static final int TRY_COUNT = Integer.parseInt(PropConf.get("HashCopyApp.TRY_COUNT"));
 
     public static void main(String... args) throws IOException {
         LogU.infoPlain("START");
-        for (var pair : COPY) {
-            set(SRC_KEY, pair.getA());
-            set(DST_KEY, pair.getB());
-            var srcMap = getMap(getPath(SRC_KEY));
-            var dstMap = getMap(getPath(DST_KEY));
+            var srcMap = getMap(SRC);
+            var dstMap = getMap(DST);
             srcMap.entrySet().stream()
                 .map(entry -> new PathPair(entry.getValue(), dstMap.get(entry.getKey())))
                 .peek(CopyU::moveIfDstMissing)
@@ -59,7 +45,7 @@ public class HashCopyApp {
                 .forEach(cFilePair -> LockU.unlockFile(cFilePair.getDst(), TRY_COUNT));
             ;
             LogU.infoPlain("DONE");
-        }
+
     }
 
     private static Map<String, Path> getMap(Path path) throws IOException {

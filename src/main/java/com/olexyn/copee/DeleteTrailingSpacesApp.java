@@ -1,6 +1,7 @@
 package com.olexyn.copee;
 
 import com.olexyn.min.log.LogU;
+import com.olexyn.propconf.PropConf;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FileUtils;
 
@@ -10,21 +11,19 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Random;
 
-import static com.olexyn.min.prop.PropStore.getPath;
-import static com.olexyn.min.prop.PropStore.set;
 
 @UtilityClass
-public final class DeleteTrailingSpaces {
+public final class DeleteTrailingSpacesApp {
 
-    private static final String SRC = "copee.src";
+    static { PropConf.loadProperties("conf.properties"); }
+    private static final Path SRC = PropConf.getPath("DeleteTrailingSpacesApp.SRC");
 
     public static void main(String... args) throws IOException {
-        set(SRC, "/home/user/home/shade/");
         LogU.infoPlain("START");
 
         long trimCount = 1;
         while (trimCount > 0) {
-            try (var walk = Files.walk(getPath(SRC))) {
+            try (var walk = Files.walk(SRC)) {
                 try {
                     trimCount = walk
                         .map(Path::toFile)

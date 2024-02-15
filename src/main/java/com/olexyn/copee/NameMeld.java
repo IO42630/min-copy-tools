@@ -2,8 +2,6 @@ package com.olexyn.copee;
 
 import java.io.IOException;
 
-import static com.olexyn.min.prop.PropStore.set;
-
 
 /**
  * Input : an directory to operate on.
@@ -16,20 +14,13 @@ import static com.olexyn.min.prop.PropStore.set;
 
 public final class NameMeld {
 
-	private static final String SRC = "copee.src";
-	private static final String DST = "copee.dst";
-	private static final int TRY_COUNT = 4;
 
 	private NameMeld() {
 	}
 
-	public static void init() {
-		set(SRC, "/home/user/home/shade/collection-share/");
-		set(DST, "/home/user/home/shade/collection/");
-	}
+
 
 	public static void main(String... args) throws IOException {
-		init();
 		// TODO
 	}
 
