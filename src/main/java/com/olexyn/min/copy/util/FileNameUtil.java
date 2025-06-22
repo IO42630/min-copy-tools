@@ -26,7 +26,12 @@ public class FileNameUtil {
                 break;
             }
         }
-        fileName = fileName.replaceAll("[^\\p{Alnum}-]", "_");
+        fileName = safeString(fileName);
         return fileName + ending;
     }
+
+    public static String safeString(String text) {
+        return text.replaceAll("[^\\p{Alnum}-]", "_");
+    }
+
 }
