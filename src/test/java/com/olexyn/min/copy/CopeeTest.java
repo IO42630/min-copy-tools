@@ -1,10 +1,11 @@
 package com.olexyn.min.copy;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -18,13 +19,14 @@ import static com.olexyn.min.copy.TestCase.DIFF_SAME_AGE;
 import static com.olexyn.min.copy.TestCase.SAME_DST_NEWER;
 import static com.olexyn.min.copy.TestCase.SAME_FILE;
 import static com.olexyn.min.copy.TestCase.SRC_ONLY;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CopeeTest {
 
 	private static final String MSG = "hello AeW7iu4u king1Oa2 ri5phuK4 Ef8goach waiz1Ohn uaGhai5r";
 	private static final Path ROOT = Path.of("/tmp/copee");
 
-	@BeforeClass
+	@BeforeAll
 	public static void prepare() throws IOException, InterruptedException {
 		// create parent dirs
 
@@ -68,14 +70,14 @@ public class CopeeTest {
 
 	@Test
 	public void testSrcOnly() {
-		Assert.assertTrue(
+		assertTrue(
 				dstPath(SRC_ONLY, "src/only/").toFile().exists()
 		);
 	}
 
 	@Test
 	public void testSameDstNewer() {
-		Assert.assertEquals(
+		assertEquals(
 				srcPath(SAME_DST_NEWER).toFile().lastModified(),
 				dstPath(SAME_DST_NEWER).toFile().lastModified()
 		);
@@ -88,7 +90,7 @@ public class CopeeTest {
 
 	@Test
 	public void testDiffDstOlder() throws IOException {
-		Assert.assertEquals(
+		assertEquals(
 				MSG,
 				FileUtils.readFileToString(dstPath(DIFF_DST_OLDER).toFile(), Charset.defaultCharset())
 		);
@@ -99,30 +101,30 @@ public class CopeeTest {
 		test(DIFF_DST_NEWER, false, false);
 	}
 
-	@AfterClass
+	@AfterAll
 	public static void reset() throws IOException {
 		FileUtils.deleteDirectory(ROOT.toFile());
 	}
 
 	private static void test(TestCase testCase, boolean sameTime, boolean sameContent) throws IOException {
 		if (sameTime) {
-			Assert.assertEquals(
+			assertEquals(
 					srcPath(testCase).toFile().lastModified(),
 					dstPath(testCase).toFile().lastModified()
 			);
 		} else {
-			Assert.assertNotEquals(
+			assertNotEquals(
 					srcPath(testCase).toFile().lastModified(),
 					dstPath(testCase).toFile().lastModified()
 			);
 		}
 		if (sameContent) {
-			Assert.assertArrayEquals(
+			assertArrayEquals(
 					Files.readAllBytes(srcPath(testCase)),
 					Files.readAllBytes(dstPath(testCase))
 			);
 		} else {
-			Assert.assertNotEquals(
+			assertNotEquals(
 					Files.readAllBytes(srcPath(testCase)),
 					Files.readAllBytes(dstPath(testCase))
 			);

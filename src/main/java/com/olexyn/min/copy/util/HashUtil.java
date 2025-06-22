@@ -2,12 +2,14 @@ package com.olexyn.min.copy.util;
 
 import com.olexyn.min.lock.LockKeeper;
 import com.olexyn.min.log.LogU;
+import lombok.experimental.UtilityClass;
 
 import java.math.BigInteger;
 import java.nio.channels.Channels;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 
+@UtilityClass
 public class HashUtil {
 
     public static String getHash(Path path) {

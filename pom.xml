@@ -4,16 +4,16 @@
     <parent>
         <groupId>com.olexyn</groupId>
         <artifactId>min-root</artifactId>
-        <version>17.0.2</version>
+        <version>21.0.0</version>
     </parent>
     <artifactId>min-copy-tools</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.olexyn</groupId>
                 <artifactId>min-bom</artifactId>
-                <version>jdk17-0.2</version>
+                <version>21.1.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -40,8 +40,8 @@
             <version>0.2</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
