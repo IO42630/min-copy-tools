@@ -1,24 +1,18 @@
-package com.olexyn.copee;
+package com.olexyn.min.copy.util;
+
+import com.olexyn.min.lock.LockKeeper;
+import com.olexyn.min.log.LogU;
 
 import java.math.BigInteger;
 import java.nio.channels.Channels;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 
-import com.olexyn.min.lock.CFile;
-import com.olexyn.min.log.LogU;
-import org.jetbrains.annotations.Nullable;
+public class HashUtil {
 
-public final class HashUtil {
-
-    private HashUtil() {
-    }
-
-    @Nullable
-    public static String getHash(@Nullable CFile fcState) {
-        if (fcState == null) {
-            return null;
-        }
-        try (var is = Channels.newInputStream(fcState.getFc())) {
+    public static String getHash(Path path) {
+        var thisFc = LockKeeper.getFc(path);
+        try (var is = Channels.newInputStream(thisFc)) {
             var m = MessageDigest.getInstance("SHA256");
             byte[] buffer = new byte[262144];
             int bytesRead;

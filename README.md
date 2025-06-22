@@ -1,7 +1,4 @@
-= Copee
-:stylesheet: ../shared/adoc-styles.css
-:toc:
-:toclevels: 4
+# min-copy-tools
 
 == Overview
 

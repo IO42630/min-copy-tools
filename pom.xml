@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.olexyn</groupId>
         <artifactId>min-root</artifactId>
-        <version>jdk17-0.0</version>
+        <version>17.0.2</version>
     </parent>
     <artifactId>min-copy-tools</artifactId>
     <version>0.1</version>
@@ -27,6 +27,16 @@
         <dependency>
             <groupId>com.olexyn</groupId>
             <artifactId>min-log</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.olexyn.min</groupId>
+            <artifactId>min-lock</artifactId>
+            <version>0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.olexyn</groupId>
+            <artifactId>min-obj</artifactId>
+            <version>0.2</version>
         </dependency>
         <dependency>
             <groupId>com.olexyn.min</groupId>
