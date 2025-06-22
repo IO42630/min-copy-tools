@@ -1,4 +1,4 @@
-package com.olexyn.copee;
+package com.olexyn.min.copy;
 
 import com.olexyn.min.log.LogU;
 import com.olexyn.propconf.PropConf;

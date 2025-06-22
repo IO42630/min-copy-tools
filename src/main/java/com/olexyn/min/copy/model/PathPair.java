@@ -1,4 +1,4 @@
-package com.olexyn.copee.model;
+package com.olexyn.min.copy.model;
 
 import java.io.File;
 import java.io.Serial;

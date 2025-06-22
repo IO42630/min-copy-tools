@@ -1,7 +1,7 @@
-package com.olexyn.copee;
+package com.olexyn.min.copy;
 
-import com.olexyn.copee.model.FcStatePair;
-import com.olexyn.copee.model.PathPair;
+import com.olexyn.min.copy.model.FcStatePair;
+import com.olexyn.min.copy.model.PathPair;
 import com.olexyn.min.log.LogU;
 import com.olexyn.propconf.PropConf;
 import lombok.experimental.UtilityClass;

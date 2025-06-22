@@ -1,4 +1,4 @@
-package com.olexyn.copee;
+package com.olexyn.min.copy;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.AfterClass;
@@ -12,12 +12,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-import static com.olexyn.copee.TestCase.DIFF_DST_NEWER;
-import static com.olexyn.copee.TestCase.DIFF_DST_OLDER;
-import static com.olexyn.copee.TestCase.DIFF_SAME_AGE;
-import static com.olexyn.copee.TestCase.SAME_DST_NEWER;
-import static com.olexyn.copee.TestCase.SAME_FILE;
-import static com.olexyn.copee.TestCase.SRC_ONLY;
+import static com.olexyn.min.copy.TestCase.DIFF_DST_NEWER;
+import static com.olexyn.min.copy.TestCase.DIFF_DST_OLDER;
+import static com.olexyn.min.copy.TestCase.DIFF_SAME_AGE;
+import static com.olexyn.min.copy.TestCase.SAME_DST_NEWER;
+import static com.olexyn.min.copy.TestCase.SAME_FILE;
+import static com.olexyn.min.copy.TestCase.SRC_ONLY;
 
 public class CopeeTest {
 

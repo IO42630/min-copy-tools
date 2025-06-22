@@ -1,4 +1,4 @@
-package com.olexyn.copee;
+package com.olexyn.min.copy;
 
 public enum TestCase {
 	SRC_ONLY,

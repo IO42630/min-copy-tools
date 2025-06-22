@@ -1,4 +1,4 @@
-package com.olexyn.copee.model;
+package com.olexyn.min.copy.model;
 
 public interface CopyPair<T> {
 

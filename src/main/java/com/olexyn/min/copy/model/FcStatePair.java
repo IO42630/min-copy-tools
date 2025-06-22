@@ -1,4 +1,4 @@
-package com.olexyn.copee.model;
+package com.olexyn.min.copy.model;
 
 import com.olexyn.min.lock.FcState;
 import org.jetbrains.annotations.Nullable;
