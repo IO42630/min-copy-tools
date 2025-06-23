@@ -54,7 +54,7 @@ public final class PathCopyApp {
             walk
                 .filter(filePath -> filePath.toFile().isFile())
                 .map(filePath -> new PathPair(filePath, findDst(filePath)))
-                .filter(pair -> !pair.getValue().toFile().exists())
+                .filter(pair -> !pair.getDstFile().exists())
                 .forEach(CopyU::moveIfDstMissing);
         }
     }

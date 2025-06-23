@@ -6,4 +6,8 @@ public interface CopyPair<T> {
 
 	T getDst();
 
+    void setSrc(T src);
+
+    void setDst(T dst);
+
 }

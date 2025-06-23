@@ -1,29 +1,34 @@
 package com.olexyn.min.copy.model;
 
-import org.jetbrains.annotations.Nullable;
+import com.olexyn.min.obj.Pair;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-import java.io.Serial;
-import java.util.AbstractMap.SimpleEntry;
+public class CopyEntry<T> extends Pair<T> implements CopyPair<T> {
 
-public class CopyEntry<T> extends SimpleEntry<T, T> implements CopyPair<T> {
 
-	@Serial
-	private static final long serialVersionUID = 1L;
+    public CopyEntry(@NonNull T a, @NonNull T b) {
+        super(a, b);
+    }
 
-	public CopyEntry(@Nullable T key, @Nullable T value) {
-		super(key, value);
-	}
-
-	@Override
+    @Override
 	public T getSrc() {
-		return getKey();
+		return getA();
 	}
 
 	@Override
 	public T getDst() {
-		return getValue();
+		return getB();
 	}
 
+    @Override
+    public void setSrc(T src) {
+        setA(src);
+    }
+
+    @Override
+    public void setDst(T dst) {
+        setB(dst);
+    }
 
 
 }
