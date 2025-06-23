@@ -1,6 +1,7 @@
 package com.olexyn.min.copy.util;
 
 import com.olexyn.min.lock.LockKeeper;
+import com.olexyn.min.lock.LockUtil;
 import com.olexyn.min.log.LogU;
 import lombok.experimental.UtilityClass;
 
@@ -22,6 +23,7 @@ public class HashUtil {
                 m.update(buffer, 0, bytesRead);
             }
             var i = new BigInteger(1, m.digest());
+            LockUtil.unlockFile(path, thisFc, 2);
             return String.format("%1$032X", i);
         } catch (Exception e) {
             LogU.warnPlain("Failed to create Hash.\n%s", e.getMessage());
