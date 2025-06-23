@@ -19,8 +19,8 @@ public class CopyU {
             if (!pair.getSrcFile().exists() || !pair.getDstFile().exists()) {
                 return;
             }
-            String srcHash = HashUtil.getHash(pair.getSrcPath());
-            String dstHash = HashUtil.getHash(pair.getDstPath());
+            String srcHash = HashUtil.getHash(pair.getSrc());
+            String dstHash = HashUtil.getHash(pair.getDst());
             if (srcHash == null || dstHash == null) {
                 return;
             }

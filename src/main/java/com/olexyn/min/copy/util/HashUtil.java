@@ -1,21 +1,27 @@
 package com.olexyn.min.copy.util;
 
-import com.olexyn.min.lock.LockKeeper;
-import com.olexyn.min.lock.LockUtil;
+import com.olexyn.min.lock.FcState;
 import com.olexyn.min.log.LogU;
 import lombok.experimental.UtilityClass;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.math.BigInteger;
 import java.nio.channels.Channels;
-import java.nio.file.Path;
 import java.security.MessageDigest;
 
 @UtilityClass
 public class HashUtil {
 
-    public static String getHash(Path path) {
-        var thisFc = LockKeeper.getFc(path);
-        try (var is = Channels.newInputStream(thisFc)) {
+
+
+
+
+    public static @Nullable String getHash(FcState fcState) {
+        if (fcState.isUnlocked()) {
+            LogU.warnPlain("Will not hash a file that is not locked.");
+            return null;
+        }
+        try (var is = Channels.newInputStream(fcState.getFc())) {
             var m = MessageDigest.getInstance("SHA256");
             byte[] buffer = new byte[262144];
             int bytesRead;
@@ -23,7 +29,6 @@ public class HashUtil {
                 m.update(buffer, 0, bytesRead);
             }
             var i = new BigInteger(1, m.digest());
-            LockUtil.unlockFile(path, thisFc, 2);
             return String.format("%1$032X", i);
         } catch (Exception e) {
             LogU.warnPlain("Failed to create Hash.\n%s", e.getMessage());

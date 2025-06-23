@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static com.olexyn.min.lock.LockUtil.lockFile;
-import static com.olexyn.min.lock.LockUtil.unlockFile;
+import static com.olexyn.min.lock.LockUtil.lock;
+import static com.olexyn.min.lock.LockUtil.unlock;
 
 @UtilityClass
 public final class PathCopyApp {
@@ -20,7 +20,6 @@ public final class PathCopyApp {
     static { PropConf.load("conf.properties"); }
     private static final Path SRC = PropConf.getPath("PathCopyApp.SRC");
     private static final Path DST = PropConf.getPath("PathCopyApp.DST");
-    private static final int TRY_COUNT = Integer.parseInt(PropConf.get("PathCopyApp.TRY_COUNT"));
 
 
 
@@ -32,14 +31,14 @@ public final class PathCopyApp {
                 .filter(filePath -> filePath.toFile().isFile())
                 .map(filePath -> new PathPair(filePath, findDst(filePath)))
                 .map(pathPair -> new FcStatePair(
-                    lockFile(pathPair.getSrc(), TRY_COUNT),
-                    lockFile(pathPair.getDst(), TRY_COUNT)
+                    lock(pathPair.getSrc()),
+                    lock(pathPair.getDst())
                 ))
                 .filter(cFilePair -> cFilePair.getSrc() != null)
                 .filter(cFilePair -> cFilePair.getDst() != null)
                 .peek(CopyU::copy)
-                .peek(cFilePair -> unlockFile(cFilePair.getSrc(), TRY_COUNT))
-                .forEach(cFilePair -> unlockFile(cFilePair.getDst(), TRY_COUNT));
+                .peek(cFilePair -> unlock(cFilePair.getSrc()))
+                .forEach(cFilePair -> unlock(cFilePair.getDst()));
         }
         LogU.infoPlain("DONE");
 

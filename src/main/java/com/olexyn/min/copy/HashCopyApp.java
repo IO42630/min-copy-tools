@@ -4,6 +4,7 @@ import com.olexyn.min.copy.model.FcStatePair;
 import com.olexyn.min.copy.model.PathPair;
 import com.olexyn.min.copy.util.CopyU;
 import com.olexyn.min.copy.util.HashUtil;
+import com.olexyn.min.lock.LockUtil;
 import com.olexyn.min.log.LogU;
 import com.olexyn.propconf.PropConf;
 
@@ -14,8 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.olexyn.min.lock.LockUtil.lockFile;
-import static com.olexyn.min.lock.LockUtil.unlockFile;
+import static com.olexyn.min.lock.LockUtil.lock;
+import static com.olexyn.min.lock.LockUtil.unlock;
 
 
 /**
@@ -30,7 +31,6 @@ public class HashCopyApp {
     static { PropConf.load("conf.properties"); }
     private static final Path SRC = PropConf.getPath("HashCopyApp.SRC");
     private static final Path DST = PropConf.getPath("HashCopyApp.DST");
-    private static final int TRY_COUNT = Integer.parseInt(PropConf.get("HashCopyApp.TRY_COUNT"));
 
     public static void main(String... args) throws IOException {
         LogU.infoPlain("START");
@@ -41,12 +41,12 @@ public class HashCopyApp {
                 .peek(CopyU::moveIfDstMissing)
                 .filter(pathPair -> pathPair.getDst() != null)
                 .map(pathPair -> new FcStatePair(
-                    lockFile(pathPair.getSrc(), TRY_COUNT),
-                    lockFile(pathPair.getDst(), TRY_COUNT)
+                    lock(pathPair.getSrc()),
+                    lock(pathPair.getDst())
                 ))
                 .peek(CopyU::copy)
-                .peek(cFilePair -> unlockFile(cFilePair.getSrc(), TRY_COUNT))
-                .forEach(cFilePair -> unlockFile(cFilePair.getDst(), TRY_COUNT));
+                .peek(cFilePair -> unlock(cFilePair.getSrc()))
+                .forEach(cFilePair -> unlock(cFilePair.getDst()));
             ;
             LogU.infoPlain("DONE");
 
@@ -57,10 +57,10 @@ public class HashCopyApp {
         try (var walk = Files.walk(path)) {
             walk
                 .filter(filePath -> filePath.toFile().isFile())
-                .map(filepath -> lockFile(filepath, TRY_COUNT))
+                .map(LockUtil::lock)
                 .filter(Objects::nonNull)
                 .forEach(cFile -> {
-                    map.put(HashUtil.getHash(cFile.getPath()), cFile.getPath());
+                    map.put(HashUtil.getHash(cFile), cFile.getPath());
                 });
         }
         return map;
