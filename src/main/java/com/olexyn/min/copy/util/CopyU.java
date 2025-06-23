@@ -1,8 +1,7 @@
-package com.olexyn.min.copy;
+package com.olexyn.min.copy.util;
 
 import com.olexyn.min.copy.model.FcStatePair;
 import com.olexyn.min.copy.model.PathPair;
-import com.olexyn.min.copy.util.HashUtil;
 import com.olexyn.min.log.LogU;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FileUtils;
